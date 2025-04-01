@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
 from .forms import ProductForm
 
@@ -21,3 +21,9 @@ def create_product(request):
     context = {'form': form}
 
     return render(request, 'product_form.html', context)
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+
+    return redirect('show-products')
