@@ -6,6 +6,10 @@
     <title>Product List</title>
 </head>
 <body>
+    <div>
+        Add product:
+        <a href="{% url 'add-product' %}">Add New Product</a>
+    </div>
     <h1>Product List</h1>
     <div>
         {% for product in products %}
