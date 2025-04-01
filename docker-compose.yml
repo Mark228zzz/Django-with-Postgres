@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: db
+    ports:
+    - "5432:5432"
+    networks:
+      - mynetwork
+
+  web:
+    image: web
+    container_name: web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://myuser:test@db:5432/db
+      DB_NAME: db
+      DB_USER: myuser
+      DB_PASSWORD: test
+      DB_HOST: db
+      DB_PORT: 5432
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
